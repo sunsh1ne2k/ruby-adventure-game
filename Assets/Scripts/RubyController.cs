@@ -69,6 +69,7 @@ public class RubyController : MonoBehaviour
 
     public void UpdateHealth(int amount){
         if (amount < 0){
+            animator.SetTrigger("Hit");
             if (isImmortal)
                 return;
             isImmortal = true;

@@ -21,7 +21,7 @@ public class DamageZone : MonoBehaviour
 
         if (controller != null){
             controller.UpdateHealth(-1);
-            controller.animator.SetTrigger("Hit");
+            // controller.animator.SetTrigger("Hit");
         }
     }
 }

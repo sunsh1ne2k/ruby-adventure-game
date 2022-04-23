@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour
 
         if (player != null){
             player.UpdateHealth(-1);
-            player.animator.SetTrigger("Hit");
+            // player.animator.SetTrigger("Hit");
             // Debug.Log("NOT NULL");
         }  
         // Debug.Log("NULLLL");
