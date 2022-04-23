@@ -11,6 +11,11 @@ public class RubyController : MonoBehaviour
     Rigidbody2D rigidBody2d;
     float horizontal;
     float vertical;
+
+    // Check that Ruby is being immortal or not - To handle damagable whenever she stay in a damageable object
+    public float timeImmortal = 1.5f;
+    bool isImmortal = false;
+    float immortalTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,14 @@ public class RubyController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+
+        // sync immortalTimer with framerate
+        if (isImmortal){
+            immortalTimer -= Time.deltaTime;
+            // if immortal time of Ruby ended, reset it to false value
+            if (immortalTimer < 0)
+                isImmortal = false;
+        }
     }
 
     void FixedUpdate(){
@@ -37,6 +50,12 @@ public class RubyController : MonoBehaviour
     }
 
     public void UpdateHealth(int amount){
+        if (amount < 0){
+            if (isImmortal)
+                return;
+            isImmortal = true;
+            immortalTimer = timeImmortal;
+        }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
