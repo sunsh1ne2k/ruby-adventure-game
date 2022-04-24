@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     public float moveTimeInterval = 3.0f;
     public float timer;
     public int direction = 1;
+    public bool isBroken = true;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,10 @@ public class EnemyController : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
+        if (!isBroken){
+            return;
+        }
+        Vector2 position = rigidBody2d.position;
         timer = timer - Time.deltaTime;
         // if timer < 0 then reverse move direction
         if (timer < 0){
@@ -32,6 +37,9 @@ public class EnemyController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (!isBroken){
+            return;
+        }
         Vector2 pos = rigidBody2d.position;
         if (vertical){
             pos.y = pos.y + Time.deltaTime * speed * direction;
@@ -56,5 +64,11 @@ public class EnemyController : MonoBehaviour
             // Debug.Log("NOT NULL");
         }  
         // Debug.Log("NULLLL");
+    }
+
+    public void Fix(){
+        isBroken = false;
+        rigidBody2d.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 }
